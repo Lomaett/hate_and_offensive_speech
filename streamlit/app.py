@@ -1,47 +1,8 @@
-"""
-
-    Simple Streamlit webserver application for serving developed classification
-	models.
-
-    Author: Explore Data Science Academy.
-
-    Note:
-    ---------------------------------------------------------------------
-    Please follow the instructions provided within the README.md file
-    located within this directory for guidance on how to use this script
-    correctly.
-    ---------------------------------------------------------------------
-
-    Description: This file is used to launch a minimal streamlit web
-	application. You are expected to extend the functionality of this script
-	as part of your predict project.
-
-	For further help with the Streamlit framework, see:
-
-	https://docs.streamlit.io/en/latest/
-
-"""
 # Streamlit dependencies
 import streamlit as st
 import joblib,os
-import pickle
 
-# Data dependencies
-import pandas as pd
-
-# Visualization dependecies
-import matplotlib.pyplot as plt
-import plotly.graph_objects as go
-import plotly.express as px
-import nltk
-from nltk import ngrams as ngrams, word_tokenize
-from collections import Counter
-
-nltk.download('punkt')
-from wordcloud import WordCloud
-pd.set_option('display.max_colwidth', 100)
-
-st.set_page_config(page_title="SynapseAI Tweet Classifer", page_icon=":cloud:", layout="wide")
+st.set_page_config(page_title="Tweet Classifer", page_icon=":cloud:", layout="wide")
 
 bg_img = """
 <style>
@@ -69,8 +30,8 @@ background-position: center;
 st.markdown(bg_img, unsafe_allow_html=True)
 
 # Vectorizer
-news_vectorizer = open("../src/dumps/lr_pipeline.joblib","rb")
-tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
+vectorizer = open("../src/dumps/cv.joblib","rb")
+tweet_cv = joblib.load(vectorizer) # loading your vectorizer from the pkl file
 
 # The main function where we will build the actual app
 def main():
@@ -83,7 +44,7 @@ def main():
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
-	options = ["Information", "Data Info", "Exploratory Data Analysis", "Prediction", "Credits"]
+	options = ["Information", "Prediction", "Credits"]
 	selection = st.sidebar.selectbox("Choose Option", options)
 
 	# Building out the "Information" page
@@ -99,15 +60,8 @@ def main():
 		sentiments. By leveraging this model, we can extract meaningful insights from the vast pool of Twitter
 		data, enabling a data-driven approach towards addressing climate change and fostering informed decision-making.""")
 
-		st.subheader("Raw Twitter data and label")
-		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
-			st.write(df[['sentiment', 'message']]) # will write the df to the page
-
 	# Building out the predication page
 	if selection == "Prediction":
-		# Vectorizer
-		news_vectorizer = open("resources/count_vectorizer.pkl","rb")
-		tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 		st.info("Prediction with ML Models")
 		# Creating a text box for user input
 		tweet_text = st.text_input("Tweet", value="Enter your text here")
@@ -142,8 +96,8 @@ def main():
 	# Building the Credits page
 	if selection == "Credits":
 		st.info('Credits')
-		st.subheader('Our Team')
-		st.text("""Ajirioghene Oguh\t\tProject Lead\n\nAdeyemo Abdulmalik\t\tTechnical Lead\n\nVirtue-ann Michael\t\tAdmin Lead\n\nAbeeb Adeola Adeshina\t\tMember\n\nMutiso Stephen\t\t\tMember\n\nFolarin Adekemi\t\t\tMember""")
+		st.subheader('Author:')
+		st.text("""Ajirioghene Oguh""")
 		st.subheader('Images')
 		st.text("""Background Image\t\tChristian Lue (unsplash.com)\n\nSidebar Image\t\t\tJohn Cameron (unsplash.com)""")
 
