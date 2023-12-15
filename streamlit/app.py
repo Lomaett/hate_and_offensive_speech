@@ -40,7 +40,7 @@ def main():
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
 	st.title(":red[Block]IT")
-	st.subheader("Hate Speech or Offensive Tweet Identifier")
+	st.subheader("Hate Speech or Offensive Language Detection")
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
@@ -102,7 +102,7 @@ Join us in creating a positive online experience. Download BlockIT now and take 
 		model = st.selectbox('Select Model', options=model_list)
 
 		# Create a dictionary to map prediction labels to human-readable categories
-		label_mapping = {'Hate Speech': 0, 'Offensive': 1, 'Neither hate speech nor Offensive': 2}
+		label_mapping = {'Hate Speech': 0, 'Offensive Language': 1, 'Neither Hate Speech nor Offensive Language': 2}
 
 		def get_key_from_value(dictionary, value):
 			for key, val in dictionary.items():
